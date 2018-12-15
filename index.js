@@ -7,17 +7,17 @@ const StringDecoder = require("string_decoder").StringDecoder;
 const config = require('./config');
 
 // Creating HTTP Server
-const httpServer = http.createServer(function(req,res){
+const httpServer = http.createServer((req,res) => {
   unifiedServer(req,res);
 })
 
 // Starting HTTP Server on config.port
-httpServer.listen(config.httpPort,function(){
+httpServer.listen(config.httpPort,() => {
   console.log("Server Started on Port: "+ config.httpPort);
 })
 
 // Common Server Logic
-var unifiedServer = function(req,res){
+var unifiedServer = (req,res) => {
 
   // Parsing Url
   const parsedUrl = url.parse(req.url, true);
@@ -41,11 +41,11 @@ var unifiedServer = function(req,res){
   const decoder = new StringDecoder("utf-8");
   let buffer = "";
 
-  req.on("data", function(data){
+  req.on("data", data => {
     buffer += decoder.write(data);
   });
 
-  req.on("end",function(){
+  req.on("end",() => {
     // Successfully Got Paylaod in payload object
     buffer += decoder.end();
 
